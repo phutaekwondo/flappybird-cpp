@@ -19,6 +19,7 @@ public:
 
 	void loadImage(char* path);
     void loadImage( char* path, int w, int h );
+	void loadText( char* text, TTF_Font* font, SDL_Color color );
 	void free();
 	void render(int x=0, int y=0, SDL_Rect* clip = NULL, double angle = 0.0, SDL_Point* center = NULL, SDL_RendererFlip flipping = SDL_FLIP_NONE );
 	void setColor(Uint8 r, Uint8 g, Uint8 b);
@@ -53,6 +54,7 @@ public:
 	static constexpr const double PI = 3.141592653596;
 	elip( SDL_Renderer* ren, int inx = 0, int iny = 0, int inw = 0, int inh = 0 );
 	void draw();
+	bool isInside( int a, int b );
 	bool isCollision( SDL_Rect rect );
 	void setX( int inx );
 	void setY( int iny );

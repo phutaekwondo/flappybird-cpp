@@ -68,6 +68,16 @@ void elip::draw(){
         }
     }
 }
+bool elip::isInside( int inx, int iny ){
+    double a,b,c;
+    a = double( w )/2;
+    b = double( h )/2;
+    c = sqrt( a*a - b*b );
 
+    int rx,ry;
+    rotate(x,y,inx,iny,-angle,rx,ry);
+    double dis = distance( rx,ry,double( x )-c,y ) + distance( rx,ry,double( x )+c, y );
+    return dis<=(a*2);
+}
 
 

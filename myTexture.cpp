@@ -45,6 +45,18 @@ void myTexture::loadImage( char* path, int w, int h ){
     loadImage = NULL;
     base      = NULL;
 }
+void myTexture::loadText( char* text, TTF_Font* font, SDL_Color color ){
+    free();
+    SDL_Surface* loadSurface = NULL;
+    loadSurface = TTF_RenderText_Solid( font, text, color);
+
+    texture = SDL_CreateTextureFromSurface( windowRenderer, loadSurface );
+    width = loadSurface->w;
+    height = loadSurface->h;
+
+    SDL_FreeSurface( loadSurface );
+    loadSurface = NULL;
+}
 void myTexture::free(){
     if ( texture != NULL ){
 	SDL_DestroyTexture( texture );

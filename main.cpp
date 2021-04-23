@@ -24,6 +24,10 @@ int main( int argc, char* argv[] ){
     bird.loadImage("img/birdscaled.png");
     elip round( gwindowRenderer, bird.getW()/2, bird.getH()/2, bird.getW(), bird.getH() );
     int angle = 0;
+    myTexture text( gwindowRenderer );
+    SDL_Color red = { 255,0,0 };
+    text.loadText( "inside", TTF_OpenFont("lazy.ttf", 50), red );
+    
 
     // quit event handle
     bool quit = false;
@@ -49,6 +53,8 @@ int main( int argc, char* argv[] ){
         round.draw();
 
 
+
+
         //update the screen
         SDL_RenderPresent( gwindowRenderer );
 
@@ -68,6 +74,12 @@ bool init(){
         std::cout<<"init SDL fail !\n";
         return false;
     }
+    //init ttf lib
+    if ( TTF_Init() < 0 ){
+        std::cout<<"init SDL_ttf fail!\n";
+        return false;
+    }
+
     int flags = IMG_INIT_JPG|IMG_INIT_PNG;
     int initted = IMG_Init( flags );
     if( ( initted&flags ) != flags ) {
