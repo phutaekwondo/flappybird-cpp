@@ -1,12 +1,10 @@
 #include"header.h"
 
-game::game( SDL_Renderer* ren, unsigned int spe, unsigned int wi, unsigned int hi, char* birdp, char* groundp, char* skyp ){
+game::game( SDL_Renderer* ren, unsigned int spe, unsigned int wi, unsigned int hi, char* groundp, char* skyp ){
     renderer = ren;
-    bird.setRenderer( ren );
     ground.setRenderer( ren );
     sky.setRenderer( ren );
 
-    bird.loadImage(birdp);
     ground.loadImage(groundp);
     sky.loadImage(skyp);
     point = 0 ;

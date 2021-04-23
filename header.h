@@ -30,7 +30,6 @@ public:
 class game{
 private:
 	SDL_Renderer* renderer;
-	myTexture bird;
 	myTexture ground;
 	myTexture sky;
 	unsigned width, height;
@@ -39,9 +38,28 @@ private:
 	int groundStartX ;
 	//add more
 public:
-	game( SDL_Renderer* ren = NULL, unsigned int spe = 10, unsigned int wi = 500, unsigned int hi = 700, char*birdp="img/birdscaled.png", char*groundp="img/ground.jpg", char* skyp="img/sky.jpg");
+	game( SDL_Renderer* ren = NULL, unsigned int spe = 10, unsigned int wi = 500, unsigned int hi = 700,  char*groundp="img/ground.jpg", char* skyp="img/sky.jpg");
 	void runThings();
 	void render();
+};
+
+//class bird
+class elip{
+private:
+	SDL_Renderer* renderer;
+	int x,y,w,h;
+	int angle;
+public:
+	static constexpr const double PI = 3.141592653596;
+	elip( SDL_Renderer* ren, int inx = 0, int iny = 0, int inw = 0, int inh = 0 );
+	void draw();
+	bool isCollision( SDL_Rect rect );
+	void setX( int inx );
+	void setY( int iny );
+	void setW( int inw );
+	void setH( int inh );
+	void setAngle( int inangle );
+	void set( int inx , int iny, int inw, int inh, int inangle );
 };
 
 bool init();

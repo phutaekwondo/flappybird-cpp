@@ -20,8 +20,10 @@ int main( int argc, char* argv[] ){
 
     //test game class
     game test( gwindowRenderer, 5 );
-
-    
+    myTexture bird( gwindowRenderer );
+    bird.loadImage("img/birdscaled.png");
+    elip round( gwindowRenderer, bird.getW()/2, bird.getH()/2, bird.getW(), bird.getH() );
+    int angle = 0;
 
     // quit event handle
     bool quit = false;
@@ -40,6 +42,11 @@ int main( int argc, char* argv[] ){
 
         test.runThings();
         test.render();
+
+        bird.render();
+        round.setAngle(angle);
+        angle += 2;
+        round.draw();
 
 
         //update the screen
