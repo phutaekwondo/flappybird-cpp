@@ -23,10 +23,13 @@ int main( int argc, char* argv[] ){
     myTexture bird( gwindowRenderer );
     bird.loadImage("img/birdscaled.png");
     elip round( gwindowRenderer, bird.getW()/2, bird.getH()/2, bird.getW(), bird.getH() );
+    int roundx = bird.getW()/2 , roundy = bird.getH()/2 ;
     int angle = 0;
     myTexture text( gwindowRenderer );
     SDL_Color red = { 255,0,0 };
     text.loadText( "inside", TTF_OpenFont("lazy.ttf", 50), red );
+    int edge = 200;
+    SDL_Rect rect = {(WIDTH-edge)/2, (HEIGHT-edge)/2, edge,edge };
     
 
     // quit event handle
@@ -36,9 +39,18 @@ int main( int argc, char* argv[] ){
         //handle FPS 
         Uint32 start = SDL_GetTicks();
 
+        //handle event
         while ( SDL_PollEvent( &event ) != 0 ){
             if ( event.type == SDL_QUIT ) quit = true;
         }
+        //handle keystate
+        // const Uint8* keyboardstate = SDL_GetKeyboardState( NULL );
+        // if ( keyboardstate[ SDL_SCANCODE_UP] )     roundy --;
+        // if ( keyboardstate[ SDL_SCANCODE_DOWN ] )  roundy ++;
+        // if ( keyboardstate[ SDL_SCANCODE_LEFT ] )  roundx --;
+        // if ( keyboardstate[ SDL_SCANCODE_RIGHT ] ) roundx ++;
+
+
         // set renderer draw color to black 
         SDL_SetRenderDrawColor( gwindowRenderer, 0,0,0,255 );
         // clear renderer
@@ -49,9 +61,9 @@ int main( int argc, char* argv[] ){
 
         bird.render();
         round.setAngle(angle);
-        angle += 2;
+        round.setX( roundx );
+        round.setY( roundy );
         round.draw();
-
 
 
 

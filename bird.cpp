@@ -79,5 +79,21 @@ bool elip::isInside( int inx, int iny ){
     double dis = distance( rx,ry,double( x )-c,y ) + distance( rx,ry,double( x )+c, y );
     return dis<=(a*2);
 }
+bool elip::isCollision( SDL_Rect rect ){
+    int runx, runy;
+    // with vertical edge 
+    int leftx = rect.x;
+    int rightx = rect.x + rect.w;
+    runy = rect.y;
+    for ( ;runy <= rect.y + rect.h; runy++ )
+        if ( isInside( leftx, runy ) || isInside( rightx, runy ) ) return true;
+
+    // with horizontal
+    int topy = rect.y, boty = rect.y + rect.h;
+    for( ; leftx<= rightx; leftx++ )
+        if ( isInside( leftx, topy ) || isInside( leftx, boty ) ) return true;
+    
+    return false;
+}
 
 
