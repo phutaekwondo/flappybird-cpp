@@ -166,5 +166,22 @@ void bird::setFalling( bool fal ){
 bool bird::isCollision( SDL_Rect rect ){
     return cover.isCollision( rect );
 }
+void bird::set( SDL_Renderer* ren, int x, int y, int spe, char* path ){
+    renderer = ren;
+
+    texture.setRenderer( ren );
+    texture.loadImage( path );
+
+    local = { x, y, texture.getW(), texture.getH() };
+
+    angle = 0;
+
+    cover.setRenderer( ren );
+    cover.set( local.x + (local.w/2), local.y+(local.h/2), local.w, local.h, 0);
+
+    isFalling = false;
+    jumpspeed = spe;
+    fallingspeed = 0;
+}
 
 

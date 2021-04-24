@@ -20,9 +20,6 @@ int main( int argc, char* argv[] ){
 
     //test game class
     game test( gwindowRenderer, 5 );
-    bird chim( gwindowRenderer, 100,100 );
-
-    SDL_Rect ground = test.getGroundRect();
 
 
     // quit event handle
@@ -35,12 +32,7 @@ int main( int argc, char* argv[] ){
         //handle event
         while ( SDL_PollEvent( &event ) != 0 ){
             if ( event.type == SDL_QUIT ) quit = true;
-            else if ( event.type == SDL_KEYDOWN ){
-                if ( event.key.keysym.sym == SDLK_UP ) {
-                    chim.setFalling( true );
-                    chim.jump();
-                }
-            }
+            test.handleEvent( event );
         }
         //handle keystate
         // const Uint8* keyboardstate = SDL_GetKeyboardState( NULL );
@@ -55,13 +47,8 @@ int main( int argc, char* argv[] ){
         // clear renderer
         SDL_RenderClear( gwindowRenderer );
 
-        test.runThings();
+        test.update();
         test.render();
-        if ( chim.isCollision( ground ) ) chim.setFalling( false );
-        chim.fall();
-        chim.render();
-        chim.drawCover();
-
 
 
         //update the screen

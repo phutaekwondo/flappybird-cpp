@@ -7,11 +7,18 @@ game::game( SDL_Renderer* ren, unsigned int spe, unsigned int wi, unsigned int h
 
     ground.loadImage(groundp);
     sky.loadImage(skyp);
+    setBirdToStartPos( ren, hi );
+
     point = 0 ;
     groundStartX = 0;
+
     speed = spe;
     width = wi;
     height = hi;
+
+    running = true;
+    std::fill_n(state, 4, false);
+    setWaiting();
 }
 void game::runThings(){
     groundStartX -= speed;
@@ -36,9 +43,83 @@ void game::render(){
         ground.render( filled , height - ground.getH() );
         filled += ground.getW();
     }
+
+    //render bird
+    _bird.render();
 }
 SDL_Rect game::getGroundRect(){
     SDL_Rect res = { 0, height - ground.getH(), ground.getW(), ground.getH() };
     return res;
 }
+void game::update(){
+    // run things 
+    if ( running ){
+        runThings();
+    }
+    // bird jump or falling 
+    _bird.fall();
+
+    // check collision 
+    if ( /*somthing */ false ){
+        setCollision();
+    }
+
+    if ( _bird.isCollision( getGroundRect() ) ){
+        setEnd();
+    }
+}
+void game::setBirdToStartPos( SDL_Renderer* ren, int hi ){
+    if ( ren == NULL ) ren = renderer;
+    if ( hi < 0 ) hi = height;
+    _bird.set( ren, 90,(hi - ground.getH())/2-40 );
+    _bird.setFalling( false );
+}
+void game::setWaiting(){
+    std::fill_n( state, 4, false );
+    state[ waiting ] = true;
+
+    running = true;
+
+    _bird.setFalling( false );
+    setBirdToStartPos();
+}
+void game::setStarted(){
+    std::fill_n( state, 4, false );
+    state[ started ] = true;
+
+    running = true;
+    _bird.setFalling( true );
+}
+void game::setCollision(){
+    std::fill_n( state, 4, false );
+    state[ collision ] = true;
+
+    running = false;
+
+    _bird.setFalling( true );
+}
+void game::setEnd(){
+    std::fill_n( state, 4, false );
+    state[ end ] = true;
+
+    running = false;
+
+    _bird.setFalling( false );
+}
+void game::handleEvent( SDL_Event event ){
+    if ( event.type == SDL_KEYDOWN ){
+        if ( event.key.keysym.sym == SDLK_SPACE || event.key.keysym.sym == SDLK_UP ){
+            if ( state[ waiting ] ){
+                setStarted();
+            }
+            if ( state[ started ] ){
+                _bird.jump();
+            }
+            if ( state[ end ] ){
+                setWaiting();
+            }
+        }
+    }
+}
+
 

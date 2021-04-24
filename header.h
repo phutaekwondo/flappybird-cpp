@@ -28,22 +28,7 @@ public:
 	int  getH();
 	void setRenderer( SDL_Renderer* ren );
 };
-class game{
-private:
-	SDL_Renderer* renderer;
-	myTexture ground;
-	myTexture sky;
-	unsigned width, height;
-	unsigned int speed;
-	unsigned int point;
-	int groundStartX ;
-	//add more
-public:
-	game( SDL_Renderer* ren = NULL, unsigned int spe = 10, unsigned int wi = 500, unsigned int hi = 700,  char*groundp="img/ground.jpg", char* skyp="img/sky.jpg");
-	void runThings();
-	void render();
-	SDL_Rect getGroundRect();
-};
+
 
 //class bird
 class elip{
@@ -88,8 +73,48 @@ public:
 
 	void setY( int y );
 	void setFalling( bool fal );
+	void set(SDL_Renderer* ren=NULL, int x=0, int y=0, int spe=1, char* path="img/birdscaled.png" );
 };
 
+class game{
+private:
+	SDL_Renderer* renderer;
+
+	bird _bird;
+	myTexture ground;
+	myTexture sky;
+
+	int groundStartX ;
+	unsigned width, height;
+	unsigned int speed;
+	unsigned int point;
+
+	bool running ;
+	enum gameState{
+		waiting,
+		started,
+		collision,
+		end,
+		total
+	};
+	bool state[4];
+	//add more
+public:	
+	void setBirdToStartPos( SDL_Renderer* ren = NULL, int hi = -1);
+	void setWaiting();
+	void setStarted();
+	void setCollision();
+	void setEnd();
+
+	game( SDL_Renderer* ren = NULL, unsigned int spe = 10, unsigned int wi = 500, unsigned int hi = 700,  char*groundp="img/ground.jpg", char* skyp="img/sky.jpg");
+	void runThings();
+	void render();
+	void update();
+
+	SDL_Rect getGroundRect();
+
+	void handleEvent( SDL_Event event );
+};
 
 bool init();
 void close();
