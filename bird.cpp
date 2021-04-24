@@ -95,5 +95,19 @@ bool elip::isCollision( SDL_Rect rect ){
     
     return false;
 }
+void elip::setRenderer( SDL_Renderer* ren ){
+    renderer = ren;
+}
 
-
+bird::bird( SDL_Renderer* ren, int x, int y, int spe, char* path ){
+    renderer = ren;
+    texture.setRenderer( ren );
+    texture.loadImage( path );
+    local = { x, y, texture.getW(), texture.getH() };
+    cover.set( local.x + (local.w/2), local.y+(local.h/2), local.w, local.h, 0);
+    jumpspeed = spe;
+    fallingspeed = 0;
+}
+void bird::render(){
+    texture.render(local.x, local.y );
+}

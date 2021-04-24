@@ -20,16 +20,7 @@ int main( int argc, char* argv[] ){
 
     //test game class
     game test( gwindowRenderer, 5 );
-    myTexture bird( gwindowRenderer );
-    bird.loadImage("img/birdscaled.png");
-    elip round( gwindowRenderer, bird.getW()/2, bird.getH()/2, bird.getW(), bird.getH() );
-    int roundx = bird.getW()/2 , roundy = bird.getH()/2 ;
-    int angle = 0;
-    myTexture text( gwindowRenderer );
-    SDL_Color red = { 255,0,0 };
-    text.loadText( "inside", TTF_OpenFont("lazy.ttf", 50), red );
-    int edge = 200;
-    SDL_Rect rect = {(WIDTH-edge)/2, (HEIGHT-edge)/2, edge,edge };
+    bird chim( gwindowRenderer, 100,100 );
     
 
     // quit event handle
@@ -58,12 +49,7 @@ int main( int argc, char* argv[] ){
 
         test.runThings();
         test.render();
-
-        bird.render();
-        round.setAngle(angle);
-        round.setX( roundx );
-        round.setY( roundy );
-        round.draw();
+        chim.render();
 
 
 

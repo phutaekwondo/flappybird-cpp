@@ -52,7 +52,7 @@ private:
 	int angle;
 public:
 	static constexpr const double PI = 3.141592653596;
-	elip( SDL_Renderer* ren, int inx = 0, int iny = 0, int inw = 0, int inh = 0 );
+	elip( SDL_Renderer* ren=NULL, int inx = 0, int iny = 0, int inw = 0, int inh = 0 );
 	void draw();
 	bool isInside( int a, int b );
 	bool isCollision( SDL_Rect rect );
@@ -62,7 +62,24 @@ public:
 	void setH( int inh );
 	void setAngle( int inangle );
 	void set( int inx , int iny, int inw, int inh, int inangle );
+	void setRenderer( SDL_Renderer* ren );
 };
+class bird{
+private:
+	SDL_Renderer* renderer;
+	myTexture texture;
+	SDL_Rect local;
+	elip cover;
+	int jumpspeed, fallingspeed;
+public:
+	static const int gravity = 1;
+	bird( SDL_Renderer* ren=NULL, int x=0, int y=0, int spe=10, char* path="img/birdscaled.png" );
+	bool isCollision( SDL_Rect rect );
+	void jump();
+	void render();
+	void fall();
+};
+
 
 bool init();
 void close();
