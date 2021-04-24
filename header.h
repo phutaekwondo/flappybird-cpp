@@ -42,6 +42,7 @@ public:
 	game( SDL_Renderer* ren = NULL, unsigned int spe = 10, unsigned int wi = 500, unsigned int hi = 700,  char*groundp="img/ground.jpg", char* skyp="img/sky.jpg");
 	void runThings();
 	void render();
+	SDL_Rect getGroundRect();
 };
 
 //class bird
@@ -69,15 +70,24 @@ private:
 	SDL_Renderer* renderer;
 	myTexture texture;
 	SDL_Rect local;
+	int angle;
 	elip cover;
+	bool isFalling;
 	int jumpspeed, fallingspeed;
 public:
 	static const int gravity = 1;
-	bird( SDL_Renderer* ren=NULL, int x=0, int y=0, int spe=10, char* path="img/birdscaled.png" );
+	bird( SDL_Renderer* ren=NULL, int x=0, int y=0, int spe=1, char* path="img/birdscaled.png" );
 	bool isCollision( SDL_Rect rect );
-	void jump();
 	void render();
+
+	void jump();
 	void fall();
+
+	void drawCover();
+	void updateCover();
+
+	void setY( int y );
+	void setFalling( bool fal );
 };
 
 

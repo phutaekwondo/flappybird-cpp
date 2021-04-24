@@ -37,3 +37,8 @@ void game::render(){
         filled += ground.getW();
     }
 }
+SDL_Rect game::getGroundRect(){
+    SDL_Rect res = { 0, height - ground.getH(), ground.getW(), ground.getH() };
+    return res;
+}
+

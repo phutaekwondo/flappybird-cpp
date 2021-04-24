@@ -3,7 +3,7 @@
 // global variable
 const int WIDTH  = 500 ;
 const int HEIGHT = 700 ;
-const int FPS    = 60 ;
+const int FPS    = 10 ;
 SDL_Window* gwindow = NULL;
 SDL_Renderer* gwindowRenderer = NULL;
 
@@ -21,7 +21,8 @@ int main( int argc, char* argv[] ){
     //test game class
     game test( gwindowRenderer, 5 );
     bird chim( gwindowRenderer, 100,100 );
-    
+
+    SDL_Rect ground = test.getGroundRect();
 
     // quit event handle
     bool quit = false;
@@ -49,7 +50,11 @@ int main( int argc, char* argv[] ){
 
         test.runThings();
         test.render();
+        chim.setFalling( true );
+        if ( chim.isCollision( ground ) ) chim.setFalling( false );
+        chim.fall();
         chim.render();
+        chim.drawCover();
 
 
 

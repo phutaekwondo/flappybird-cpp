@@ -101,13 +101,59 @@ void elip::setRenderer( SDL_Renderer* ren ){
 
 bird::bird( SDL_Renderer* ren, int x, int y, int spe, char* path ){
     renderer = ren;
+
     texture.setRenderer( ren );
     texture.loadImage( path );
+
     local = { x, y, texture.getW(), texture.getH() };
+
+    angle = 0;
+
+    cover.setRenderer( ren );
     cover.set( local.x + (local.w/2), local.y+(local.h/2), local.w, local.h, 0);
+
+    isFalling = false;
     jumpspeed = spe;
     fallingspeed = 0;
 }
 void bird::render(){
-    texture.render(local.x, local.y );
+    texture.render(local.x, local.y , NULL, angle );
 }
+void bird::jump(){
+    int updateAngle = -30;
+    angle = updateAngle; 
+    cover.setAngle( updateAngle );
+}
+void bird::drawCover(){
+    cover.draw();
+}
+void bird::updateCover(){
+    cover.set( local.x + (local.w/2), local.y+(local.h/2), local.w, local.h, angle );
+}
+void bird::setY( int y ){
+    local.y = y;
+    updateCover();
+}
+void bird::fall(){
+    // check if bird is not falling then don't "fall"
+    if ( !isFalling ) return;
+
+    fallingspeed += bird::gravity;
+    if ( fallingspeed > 20 ) fallingspeed = 20;
+    setY( local.y + fallingspeed );
+    if ( fallingspeed > 0 )
+    {
+        angle += 1;
+        if ( angle > 30 ) angle = 30;
+        updateCover();
+    }
+
+}
+void bird::setFalling( bool fal ){
+    isFalling = fal;
+}
+bool bird::isCollision( SDL_Rect rect ){
+    return cover.isCollision( rect );
+}
+
+
