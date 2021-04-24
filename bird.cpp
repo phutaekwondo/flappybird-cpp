@@ -120,9 +120,16 @@ void bird::render(){
     texture.render(local.x, local.y , NULL, angle );
 }
 void bird::jump(){
+    // if the bird is not falling then don't jump
+    if ( !isFalling ) return;
+
+    // rotate the bird up when flap
     int updateAngle = -30;
     angle = updateAngle; 
     cover.setAngle( updateAngle );
+
+    // flap up
+    fallingspeed = -12;
 }
 void bird::drawCover(){
     cover.draw();
@@ -139,15 +146,19 @@ void bird::fall(){
     if ( !isFalling ) return;
 
     fallingspeed += bird::gravity;
-    if ( fallingspeed > 20 ) fallingspeed = 20;
+    // below line is make falling speed limimted 
+    int maxfallspeed = 8;
+    if ( fallingspeed > maxfallspeed ) fallingspeed = maxfallspeed;
     setY( local.y + fallingspeed );
+
+    // update angle if the bird when falling
+    // make game more fancy
     if ( fallingspeed > 0 )
     {
-        angle += 1;
+        angle += 2;
         if ( angle > 30 ) angle = 30;
         updateCover();
     }
-
 }
 void bird::setFalling( bool fal ){
     isFalling = fal;

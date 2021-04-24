@@ -3,7 +3,7 @@
 // global variable
 const int WIDTH  = 500 ;
 const int HEIGHT = 700 ;
-const int FPS    = 10 ;
+const int FPS    = 60 ;
 SDL_Window* gwindow = NULL;
 SDL_Renderer* gwindowRenderer = NULL;
 
@@ -24,6 +24,7 @@ int main( int argc, char* argv[] ){
 
     SDL_Rect ground = test.getGroundRect();
 
+
     // quit event handle
     bool quit = false;
     SDL_Event event;   
@@ -34,6 +35,12 @@ int main( int argc, char* argv[] ){
         //handle event
         while ( SDL_PollEvent( &event ) != 0 ){
             if ( event.type == SDL_QUIT ) quit = true;
+            else if ( event.type == SDL_KEYDOWN ){
+                if ( event.key.keysym.sym == SDLK_UP ) {
+                    chim.setFalling( true );
+                    chim.jump();
+                }
+            }
         }
         //handle keystate
         // const Uint8* keyboardstate = SDL_GetKeyboardState( NULL );
@@ -50,7 +57,6 @@ int main( int argc, char* argv[] ){
 
         test.runThings();
         test.render();
-        chim.setFalling( true );
         if ( chim.isCollision( ground ) ) chim.setFalling( false );
         chim.fall();
         chim.render();
