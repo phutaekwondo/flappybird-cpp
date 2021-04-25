@@ -1,11 +1,15 @@
 #include"header.h"
 
 
-myTexture::myTexture( SDL_Renderer* renderer ){
+myTexture::myTexture( SDL_Renderer* renderer, char* path ){
     texture = NULL;
     width   = 0;
     height  = 0;
     windowRenderer = renderer;
+
+    if ( path != NULL ){
+        loadImage( path );
+    }
 } 
 myTexture::~myTexture(){
     free();
@@ -49,6 +53,11 @@ void myTexture::loadText( char* text, TTF_Font* font, SDL_Color color ){
     free();
     SDL_Surface* loadSurface = NULL;
     loadSurface = TTF_RenderText_Solid( font, text, color);
+    
+    if ( loadSurface == NULL ){
+        std::cout<<"can not load \""<<text<<"\" texture\n";
+        return;
+    }
 
     texture = SDL_CreateTextureFromSurface( windowRenderer, loadSurface );
     width = loadSurface->w;

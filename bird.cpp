@@ -90,8 +90,11 @@ bool elip::isCollision( SDL_Rect rect ){
 
     // with horizontal
     int topy = rect.y, boty = rect.y + rect.h;
+    //bug here
     for( ; leftx<= rightx; leftx++ )
-        if ( isInside( leftx, topy ) || isInside( leftx, boty ) ) return true;
+        if ( isInside( leftx, topy ) || isInside( leftx, boty ) ){ 
+            return true;
+        }
     
     return false;
 }
@@ -183,5 +186,7 @@ void bird::set( SDL_Renderer* ren, int x, int y, int spe, char* path ){
     jumpspeed = spe;
     fallingspeed = 0;
 }
-
+elip bird::getElip(){
+    return cover;
+}
 

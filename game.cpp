@@ -9,6 +9,10 @@ game::game( SDL_Renderer* ren, unsigned int spe, unsigned int wi, unsigned int h
     sky.loadImage(skyp);
     setBirdToStartPos( ren, hi );
 
+    unsigned int border = 100;
+    pip.loadTexture( ren );
+    pip.setHiLo( border, hi - ground.getH() - border - pip.getSpace() );
+
     point = 0 ;
     groundStartX = 0;
 
@@ -34,6 +38,11 @@ void game::render(){
         sky.render(filled);
         filled += sky.getW();
     }
+    //render bird
+    _bird.render();
+    
+    // render pipes
+    pip.render();
 
     //render ground
     filled = groundStartX;
@@ -44,8 +53,6 @@ void game::render(){
         filled += ground.getW();
     }
 
-    //render bird
-    _bird.render();
 }
 SDL_Rect game::getGroundRect(){
     SDL_Rect res = { 0, height - ground.getH(), ground.getW(), ground.getH() };
@@ -59,10 +66,13 @@ void game::update(){
     // bird jump or falling 
     _bird.fall();
 
+    //pipe update
+    pip.update( speed, width );
+
     // check collision 
-    if ( /*somthing */ false ){
-        setCollision();
-    }
+    // if ( pip.isCollision( _bird.getElip() ) ) {
+    //     setCollision();
+    // }
 
     if ( _bird.isCollision( getGroundRect() ) ){
         setEnd();
@@ -80,6 +90,9 @@ void game::setWaiting(){
 
     running = true;
 
+    pip.setBorning( false );
+    pip.setFresh();
+    
     _bird.setFalling( false );
     setBirdToStartPos();
 }
@@ -88,11 +101,16 @@ void game::setStarted(){
     state[ started ] = true;
 
     running = true;
+
+    pip.setBorning( true );
+
     _bird.setFalling( true );
 }
 void game::setCollision(){
     std::fill_n( state, 4, false );
     state[ collision ] = true;
+
+    pip.setBorning( false );
 
     running = false;
 
@@ -103,6 +121,8 @@ void game::setEnd(){
     state[ end ] = true;
 
     running = false;
+
+    pip.setBorning( false );
 
     _bird.setFalling( false );
 }

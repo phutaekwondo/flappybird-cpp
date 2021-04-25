@@ -7,6 +7,8 @@
 #include<cstring>
 #include<string>
 #include<sstream>
+#include<vector>
+
 
 class myTexture{
 private:
@@ -14,7 +16,7 @@ private:
 	int width, height;
     SDL_Renderer* windowRenderer;
 public:
-	myTexture( SDL_Renderer* renderer = NULL );
+	myTexture( SDL_Renderer* renderer = NULL, char* path = NULL );
 	~myTexture();
 
 	void loadImage(char* path);
@@ -28,7 +30,6 @@ public:
 	int  getH();
 	void setRenderer( SDL_Renderer* ren );
 };
-
 
 //class bird
 class elip{
@@ -74,12 +75,55 @@ public:
 	void setY( int y );
 	void setFalling( bool fal );
 	void set(SDL_Renderer* ren=NULL, int x=0, int y=0, int spe=1, char* path="img/birdscaled.png" );
+
+	elip getElip();
+};
+
+//class pipe
+//global texture, use this for all pipe object
+class pipe{
+	myTexture* texturePointer;
+	int startX, space, gatePos ;
+public:
+	pipe( myTexture* tex = NULL );
+	void render();
+	void set( int x, int pos, int spa = -1 );
+	void setTexture( myTexture* tex );
+
+	bool isCollision( elip eli );	
+	int getW();
+	int getSpace();
+};
+class pipe_list{
+private:	
+	pipe pip;
+	int startX, step ;
+	std::vector<int> gatePos;
+	int hi,lo;
+
+	bool borning;
+public:
+	pipe_list( char* path = NULL, int w = 500, int ste = 100 );
+	void loadTexture( SDL_Renderer* ren, char* path = "img/pipe.png");
+	void render();
+
+	void setHiLo( int h, int l );
+	void setBorning( bool in );
+	void setFresh( int w = 500 );
+
+	void born();
+	void update( int spe, int w = 500 );
+	
+	bool isCollision( elip eli );
+
+	int getSpace();
 };
 
 class game{
 private:
 	SDL_Renderer* renderer;
 
+	pipe_list pip;
 	bird _bird;
 	myTexture ground;
 	myTexture sky;

@@ -19,8 +19,13 @@ int main( int argc, char* argv[] ){
     Uint32 perF = 1000/FPS;
 
     //test game class
-    game test( gwindowRenderer, 5 );
-
+    game test( gwindowRenderer, 3 );
+    
+    //print fps 
+    myTexture fps( gwindowRenderer );
+    TTF_Font* font = TTF_OpenFont( "lazy.ttf", 32 );
+    SDL_Color red = { 255, 0, 0 };
+    fps.loadText( " ", font, red );
 
     // quit event handle
     bool quit = false;
@@ -49,6 +54,7 @@ int main( int argc, char* argv[] ){
 
         test.update();
         test.render();
+        fps.render();
 
 
         //update the screen
@@ -57,6 +63,12 @@ int main( int argc, char* argv[] ){
         //handle FPS
         Uint32 end = SDL_GetTicks();
         if ( end - start < perF ) SDL_Delay( perF - (end-start) );
+        end = SDL_GetTicks();
+        std::stringstream fpsstring;
+        fpsstring << "fps : "<< double(1000)/double( end - start );
+        char* fpsch = new char[ fpsstring.str().length() ];
+        strcpy( fpsch, fpsstring.str().c_str() );
+        fps.loadText( fpsch, font, red );
     }
     close();
     return 0;
