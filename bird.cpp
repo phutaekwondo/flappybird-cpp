@@ -208,9 +208,26 @@ bool elip::isCollision( SDL_Rect rect ){
     // return false;
 
     // another method 
+    int x1,y1,x2,y2;
+    // for above edge
+    x1 = rect.x;            y1 = rect.y; 
+    x2 = rect.x + rect.w;   y2 = rect.y;
+    if ( isCollisionLine( x1, y1, x2, y2 ) ) return true;
+    
+    // for left edge
+    x2 = rect.x;            y2 = rect.y + rect.h ;
+    if ( isCollisionLine( x1, y1, x2, y2 ) ) return true;
+
+    // for below edge
+    x1 = rect.x + rect.w ;  y1 = rect.y + rect.h; 
+    if ( isCollisionLine( x1, y1, x2, y2 ) ) return true;
+
+    // for right edge
+    x2 = rect.x + rect.w;   y2 = rect.y;
+    if ( isCollisionLine( x1, y1, x2, y2 ) ) return true;
+    
+    // no one 
     return false;
-
-
 }
 void elip::setRenderer( SDL_Renderer* ren ){
     renderer = ren;

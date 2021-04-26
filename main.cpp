@@ -34,8 +34,6 @@ int main( int argc, char* argv[] ){
     int edge = 200;
     SDL_Rect rect = { (WIDTH - edge) / 2, (HEIGHT - edge)/2, edge, edge };
     myTexture collision( gwindowRenderer );
-    int value = 200, hi = 200, lo = 100;
-    bool vertical = true;
     collision.loadText( "collision", font, red );
 
     // quit event handle
@@ -73,8 +71,7 @@ int main( int argc, char* argv[] ){
         check.setAngle( alpha );
         check.draw();
         SDL_RenderDrawRect( gwindowRenderer, &rect );
-        SDL_RenderDrawLine( gwindowRenderer, value, lo, value, hi );
-        if ( check.isCollisionLine( value, lo, value, hi ) ) collision.render(0,100);
+        if ( check.isCollision( rect ) ) collision.render(0,100);
 
         //update the screen
         SDL_RenderPresent( gwindowRenderer );
