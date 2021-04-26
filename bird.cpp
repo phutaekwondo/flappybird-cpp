@@ -253,9 +253,13 @@ bird::bird( SDL_Renderer* ren, int x, int y, int spe, char* path ){
     isFalling = false;
     jumpspeed = spe;
     fallingspeed = 0;
+
+    gra = 0;
 }
 void bird::render(){
     texture.render(local.x, local.y , NULL, angle );
+    // cover.setRenderer( renderer );
+    // cover.draw();
 }
 void bird::jump(){
     // if the bird is not falling then don't jump
@@ -267,7 +271,7 @@ void bird::jump(){
     cover.setAngle( updateAngle );
 
     // flap up
-    fallingspeed = -12;
+    fallingspeed = -11;
 }
 void bird::drawCover(){
     cover.draw();
@@ -283,10 +287,15 @@ void bird::fall(){
     // check if bird is not falling then don't "fall"
     if ( !isFalling ) return;
 
-    fallingspeed += bird::gravity;
-    // below line is make falling speed limimted 
-    int maxfallspeed = 10;
-    if ( fallingspeed > maxfallspeed ) fallingspeed = maxfallspeed;
+    gra ++;
+    if ( gra >= graDrop ){
+        fallingspeed += bird::gravity; 
+        gra = 0;
+    }
+    // // below line is make falling speed limimted 
+    // int maxfallspeed = 9;
+    // if ( fallingspeed > maxfallspeed ) fallingspeed = maxfallspeed;
+
     setY( local.y + fallingspeed );
 
     // update angle if the bird when falling

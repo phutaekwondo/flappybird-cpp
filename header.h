@@ -61,12 +61,17 @@ private:
 	SDL_Renderer* renderer;
 	myTexture texture;
 	SDL_Rect local;
+
 	int angle;
 	elip cover;
+
 	bool isFalling;
 	int jumpspeed, fallingspeed;
+
+	int gra;
 public:
-	static const int gravity = 1;
+	static const int graDrop = 4;
+	static const int gravity = 3;
 	bird( SDL_Renderer* ren=NULL, int x=0, int y=0, int spe=1, char* path="img/birdscaled.png" );
 	bool isCollision( SDL_Rect rect );
 	void render();
@@ -108,7 +113,7 @@ private:
 
 	bool borning;
 public:
-	pipe_list( char* path = NULL, int w = 500, int ste = 100 );
+	pipe_list( char* path = NULL, int w = 500, int ste = 150 );
 	void loadTexture( SDL_Renderer* ren, char* path = "img/pipe.png");
 	void render();
 
@@ -128,6 +133,7 @@ public:
 class game{
 private:
 	SDL_Renderer* renderer;
+	Mix_Chunk *wing, *pointUp , *hit;
 
 	pipe_list pip;
 	bird _bird;

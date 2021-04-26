@@ -5,11 +5,16 @@ game::game( SDL_Renderer* ren, unsigned int spe, unsigned int wi, unsigned int h
     ground.setRenderer( ren );
     sky.setRenderer( ren );
 
+    //load sound
+    wing = Mix_LoadWAV( "sound/wing.wav" );
+    pointUp = Mix_LoadWAV( "sound/point.wav" );
+    hit  = Mix_LoadWAV( "sound/hit.wav"  );
+
     ground.loadImage(groundp);
     sky.loadImage(skyp);
     setBirdToStartPos( ren, hi );
 
-    unsigned int border = 100;
+    unsigned int border = 70;
     pip.loadTexture( ren );
     pip.setHiLo( border, hi - ground.getH() - border - pip.getSpace() );
 
@@ -79,11 +84,16 @@ void game::update(){
     pip.update( speed, width );
 
     //update point 
-    point += pip.upPoint( _bird.getElip() );
+    int up  = pip.upPoint( _bird.getElip() );
+    point += up;
+    if ( up > 0 ){
+        Mix_PlayChannel( -1, pointUp , 0);
+    } 
 
     // check collision 
     if ( state[ started ] && pip.isCollision( _bird.getElip() ) ) {
         _bird.jump();
+        Mix_PlayChannel( -1, hit, 0 );
         setCollision();
     }
 
@@ -149,6 +159,7 @@ void game::handleEvent( SDL_Event event ){
             }
             if ( state[ started ] ){
                 _bird.jump();
+                Mix_PlayChannel( -1, wing, 0 );
             }
             if ( state[ end ] ){
                 setWaiting();

@@ -5,7 +5,7 @@ pipe::pipe( myTexture* tex ){
     startX = 0;
     // this is space of gate
     // space of gate is distance from above pipe to below pipe
-    space = 300;
+    space = 200;
     startX = 0;
     gatePos = 100;
 }

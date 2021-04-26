@@ -64,7 +64,7 @@ int main( int argc, char* argv[] ){
         test.render();
         test.update();
 
-        fps.render();
+        // fps.render();
 
         // check.setX( roundx );
         // check.setY( roundy );
@@ -79,12 +79,12 @@ int main( int argc, char* argv[] ){
         //handle FPS
         Uint32 end = SDL_GetTicks();
         if ( end - start < perF ) SDL_Delay( perF - (end-start) );
-        end = SDL_GetTicks();
-        std::stringstream fpsstring;
-        fpsstring << "fps : "<< double(1000)/double( end - start );
-        char* fpsch = new char[ fpsstring.str().length() ];
-        strcpy( fpsch, fpsstring.str().c_str() );
-        fps.loadText( fpsch, font, red );
+        // end = SDL_GetTicks();
+        // std::stringstream fpsstring;
+        // fpsstring << "fps : "<< double(1000)/double( end - start );
+        // char* fpsch = new char[ fpsstring.str().length() ];
+        // strcpy( fpsch, fpsstring.str().c_str() );
+        // fps.loadText( fpsch, font, red );
     }
     close();
     return 0;
