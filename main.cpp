@@ -122,7 +122,7 @@ bool init(){
         return false;
     } 
 
-    gwindowRenderer = SDL_CreateRenderer( gwindow, -1, SDL_RENDERER_ACCELERATED );
+    gwindowRenderer = SDL_CreateRenderer( gwindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
     if ( gwindowRenderer == NULL ) {
         std::cout<<"create renderer fail!\n";
         return false;
