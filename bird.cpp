@@ -271,7 +271,7 @@ void bird::jump(){
     cover.setAngle( updateAngle );
 
     // flap up
-    fallingspeed = -11;
+    fallingspeed = -13;
 }
 void bird::drawCover(){
     cover.draw();
@@ -287,14 +287,15 @@ void bird::fall(){
     // check if bird is not falling then don't "fall"
     if ( !isFalling ) return;
 
-    gra ++;
-    if ( gra >= graDrop ){
-        fallingspeed += bird::gravity; 
-        gra = 0;
-    }
+    // gra ++;
+    // if ( gra >= graDrop ){
+    //     fallingspeed += bird::gravity; 
+    //     gra = 0;
+    // }
+    fallingspeed += bird::gravity;
     // // below line is make falling speed limimted 
-    // int maxfallspeed = 9;
-    // if ( fallingspeed > maxfallspeed ) fallingspeed = maxfallspeed;
+    int maxfallspeed = 11;
+    if ( fallingspeed > maxfallspeed ) fallingspeed = maxfallspeed;
 
     setY( local.y + fallingspeed );
 

@@ -71,7 +71,7 @@ private:
 	int gra;
 public:
 	static const int graDrop = 4;
-	static const int gravity = 3;
+	static const int gravity = 1;
 	bird( SDL_Renderer* ren=NULL, int x=0, int y=0, int spe=1, char* path="img/birdscaled.png" );
 	bool isCollision( SDL_Rect rect );
 	void render();
