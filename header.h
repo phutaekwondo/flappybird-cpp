@@ -41,8 +41,11 @@ public:
 	static constexpr const double PI = 3.141592653596;
 	elip( SDL_Renderer* ren=NULL, int inx = 0, int iny = 0, int inw = 0, int inh = 0 );
 	void draw();
+
 	bool isInside( int a, int b );
 	bool isCollision( SDL_Rect rect );
+	bool isCollisionLine( int x1, int y1, int x2, int y2 );
+
 	void setX( int inx );
 	void setY( int iny );
 	void setW( int inw );

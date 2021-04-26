@@ -74,9 +74,9 @@ void game::update(){
     //     setCollision();
     // }
 
-    if ( _bird.isCollision( getGroundRect() ) ){
-        setEnd();
-    }
+    // if ( _bird.isCollision( getGroundRect() ) ){
+    //     setEnd();
+    // }
 }
 void game::setBirdToStartPos( SDL_Renderer* ren, int hi ){
     if ( ren == NULL ) ren = renderer;

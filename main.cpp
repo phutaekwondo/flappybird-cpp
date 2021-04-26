@@ -27,6 +27,17 @@ int main( int argc, char* argv[] ){
     SDL_Color red = { 255, 0, 0 };
     fps.loadText( " ", font, red );
 
+    // test elip collision
+    elip check( gwindowRenderer, 50,50, 80, 50 );
+    int alpha = -30;
+    int roundx = 50, roundy = 50;
+    int edge = 200;
+    SDL_Rect rect = { (WIDTH - edge) / 2, (HEIGHT - edge)/2, edge, edge };
+    myTexture collision( gwindowRenderer );
+    int value = 200, hi = 200, lo = 100;
+    bool vertical = true;
+    collision.loadText( "collision", font, red );
+
     // quit event handle
     bool quit = false;
     SDL_Event event;   
@@ -37,14 +48,14 @@ int main( int argc, char* argv[] ){
         //handle event
         while ( SDL_PollEvent( &event ) != 0 ){
             if ( event.type == SDL_QUIT ) quit = true;
-            test.handleEvent( event );
+            // test.handleEvent( event );
         }
         //handle keystate
-        // const Uint8* keyboardstate = SDL_GetKeyboardState( NULL );
-        // if ( keyboardstate[ SDL_SCANCODE_UP] )     roundy --;
-        // if ( keyboardstate[ SDL_SCANCODE_DOWN ] )  roundy ++;
-        // if ( keyboardstate[ SDL_SCANCODE_LEFT ] )  roundx --;
-        // if ( keyboardstate[ SDL_SCANCODE_RIGHT ] ) roundx ++;
+        const Uint8* keyboardstate = SDL_GetKeyboardState( NULL );
+        if ( keyboardstate[ SDL_SCANCODE_UP] )     roundy --;
+        if ( keyboardstate[ SDL_SCANCODE_DOWN ] )  roundy ++;
+        if ( keyboardstate[ SDL_SCANCODE_LEFT ] )  roundx --;
+        if ( keyboardstate[ SDL_SCANCODE_RIGHT ] ) roundx ++;
 
 
         // set renderer draw color to black 
@@ -54,8 +65,16 @@ int main( int argc, char* argv[] ){
 
         test.update();
         test.render();
+
         fps.render();
 
+        check.setX( roundx );
+        check.setY( roundy );
+        check.setAngle( alpha );
+        check.draw();
+        SDL_RenderDrawRect( gwindowRenderer, &rect );
+        SDL_RenderDrawLine( gwindowRenderer, value, lo, value, hi );
+        if ( check.isCollisionLine( value, lo, value, hi ) ) collision.render(0,100);
 
         //update the screen
         SDL_RenderPresent( gwindowRenderer );
