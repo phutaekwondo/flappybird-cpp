@@ -49,6 +49,7 @@ int pipe::getSpace(){
 pipe_list::pipe_list( char* path, int w, int ste ){
     borning = false;
     startX = w; 
+    startXfromBird = w;
     //step is distance between two gate
     step = ste;
 }
@@ -87,26 +88,33 @@ void pipe_list::update( int spe, int w ){
         startX += pip.getW() + step;
         gatePos.erase( gatePos.begin() );
     }
-    if ( startX + ( pip.getW() + step )*gatePos.size() >= w )
+    if ( startX + ( pip.getW() + step )*gatePos.size() <= w )
         born();
     
     // run pipes
     startX -= spe ;
+    startXfromBird -= spe;
 }
 bool pipe_list::isCollision( elip eli ){
     int filled = startX;
+
     int size = gatePos.size();
     if ( size == 0 ) return false;
-    //bug here
+
     for( int i = 0; i < size; i++ ){
         pip.set( filled, gatePos[i] );
-        //bug here
         if ( pip.isCollision( eli ) ) return true;
-        //fix me
+        filled += pip.getW() + step;
     }
-    // fix me
 
     return false;
+}
+int pipe_list::upPoint( elip eli ){
+    if ( startXfromBird <= eli.getX() ){
+        startXfromBird += pip.getW() + step;
+        return 1;
+    }
+    return 0;
 }
 int pipe_list::getSpace(){
     return pip.getSpace();
@@ -114,5 +122,6 @@ int pipe_list::getSpace(){
 void pipe_list::setFresh( int w ){
     gatePos.clear();
     startX = w;
+    startXfromBird = w;
 }
 

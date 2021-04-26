@@ -114,7 +114,6 @@ bool cut( double Ix, double Iy, double R, double x1, double y1, double x2, doubl
 
 void elip::draw(){
     //set color to white
-    SDL_SetRenderDrawColor( renderer, 255, 255 ,255 , 100 );
     double a,b,c;
     a = double( w )/2;
     b = double( h )/2;
@@ -208,6 +207,8 @@ bool elip::isCollision( SDL_Rect rect ){
     // return false;
 
     // another method 
+    //draw for debug
+
     int x1,y1,x2,y2;
     // for above edge
     x1 = rect.x;            y1 = rect.y; 
@@ -231,6 +232,9 @@ bool elip::isCollision( SDL_Rect rect ){
 }
 void elip::setRenderer( SDL_Renderer* ren ){
     renderer = ren;
+}
+int elip::getX(){
+    return x;
 }
 
 bird::bird( SDL_Renderer* ren, int x, int y, int spe, char* path ){
@@ -281,7 +285,7 @@ void bird::fall(){
 
     fallingspeed += bird::gravity;
     // below line is make falling speed limimted 
-    int maxfallspeed = 8;
+    int maxfallspeed = 10;
     if ( fallingspeed > maxfallspeed ) fallingspeed = maxfallspeed;
     setY( local.y + fallingspeed );
 
@@ -289,7 +293,7 @@ void bird::fall(){
     // make game more fancy
     if ( fallingspeed > 0 )
     {
-        angle += 2;
+        angle += 3;
         if ( angle > 30 ) angle = 30;
         updateCover();
     }

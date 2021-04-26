@@ -38,11 +38,12 @@ void game::render(){
         sky.render(filled);
         filled += sky.getW();
     }
-    //render bird
-    _bird.render();
     
     // render pipes
     pip.render();
+
+    //render bird
+    _bird.render();
 
     //render ground
     filled = groundStartX;
@@ -52,6 +53,14 @@ void game::render(){
         ground.render( filled , height - ground.getH() );
         filled += ground.getW();
     }
+
+    // render point
+    std::string pstr = std::to_string( point );
+    char *pch = new char[ pstr.length() ];
+    strcpy( pch, pstr.c_str() ); 
+    myTexture ptex( renderer );
+    ptex.loadText( pch, pointFont, white );
+    ptex.render( ( width - ptex.getW() )/2, 50 );
 
 }
 SDL_Rect game::getGroundRect(){
@@ -69,14 +78,18 @@ void game::update(){
     //pipe update
     pip.update( speed, width );
 
-    // check collision 
-    // if ( pip.isCollision( _bird.getElip() ) ) {
-    //     setCollision();
-    // }
+    //update point 
+    point += pip.upPoint( _bird.getElip() );
 
-    // if ( _bird.isCollision( getGroundRect() ) ){
-    //     setEnd();
-    // }
+    // check collision 
+    if ( state[ started ] && pip.isCollision( _bird.getElip() ) ) {
+        _bird.jump();
+        setCollision();
+    }
+
+    if ( _bird.isCollision( getGroundRect() ) ){
+        setEnd();
+    }
 }
 void game::setBirdToStartPos( SDL_Renderer* ren, int hi ){
     if ( ren == NULL ) ren = renderer;
@@ -87,6 +100,8 @@ void game::setBirdToStartPos( SDL_Renderer* ren, int hi ){
 void game::setWaiting(){
     std::fill_n( state, 4, false );
     state[ waiting ] = true;
+
+    point = 0;
 
     running = true;
 

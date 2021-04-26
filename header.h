@@ -53,6 +53,8 @@ public:
 	void setAngle( int inangle );
 	void set( int inx , int iny, int inw, int inh, int inangle );
 	void setRenderer( SDL_Renderer* ren );
+
+	int getX();
 };
 class bird{
 private:
@@ -100,7 +102,7 @@ public:
 class pipe_list{
 private:	
 	pipe pip;
-	int startX, step ;
+	int startX, step, startXfromBird ;
 	std::vector<int> gatePos;
 	int hi,lo;
 
@@ -118,6 +120,7 @@ public:
 	void update( int spe, int w = 500 );
 	
 	bool isCollision( elip eli );
+	int upPoint( elip eli );
 
 	int getSpace();
 };
@@ -147,6 +150,8 @@ private:
 	bool state[4];
 	//add more
 public:	
+	TTF_Font* pointFont = TTF_OpenFont( "font/point.ttf", 50 );
+	SDL_Color white = {255,255,255};
 	void setBirdToStartPos( SDL_Renderer* ren = NULL, int hi = -1);
 	void setWaiting();
 	void setStarted();
