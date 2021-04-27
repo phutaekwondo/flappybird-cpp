@@ -296,7 +296,7 @@ void bird::fall(){
     // }
     fallingspeed += bird::gravity;
     // // below line is make falling speed limimted 
-    int maxfallspeed = 11;
+    int maxfallspeed = 12;
     if ( fallingspeed > maxfallspeed ) fallingspeed = maxfallspeed;
 
     setY( local.y + fallingspeed );
