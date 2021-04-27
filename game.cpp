@@ -86,6 +86,9 @@ void game::update(){
     //update point 
     int up  = pip.upPoint( _bird.getElip() );
     point += up;
+
+    render(); 
+
     if ( up > 0 ){
         Mix_PlayChannel( -1, pointUp , 0);
     } 

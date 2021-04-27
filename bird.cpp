@@ -208,6 +208,8 @@ bool elip::isCollision( SDL_Rect rect ){
 
     // another method 
     //draw for debug
+    // draw();
+    // SDL_RenderDrawRect( renderer, &rect );
 
     int x1,y1,x2,y2;
     // for above edge

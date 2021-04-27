@@ -48,8 +48,9 @@ int pipe::getSpace(){
 // pipe list class
 pipe_list::pipe_list( char* path, int w, int ste ){
     borning = false;
-    startX = w; 
-    startXfromBird = w;
+    int startTrail = 200;
+    startX = w + startTrail ; 
+    startXfromBird = w + startTrail ;
     //step is distance between two gate
     step = ste;
 }
@@ -121,7 +122,9 @@ int pipe_list::getSpace(){
 }
 void pipe_list::setFresh( int w ){
     gatePos.clear();
-    startX = w;
-    startXfromBird = w;
+
+    int startTrail = 200;
+    startX = w + startTrail ; 
+    startXfromBird = w + startTrail ;
 }
 

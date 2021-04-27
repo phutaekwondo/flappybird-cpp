@@ -19,7 +19,7 @@ int main( int argc, char* argv[] ){
     Uint32 perF = 1000/FPS;
 
     //test game class
-    game test( gwindowRenderer, 3 );
+    game test( gwindowRenderer, 4 );
     
     //print fps 
     myTexture fps( gwindowRenderer );
@@ -61,7 +61,6 @@ int main( int argc, char* argv[] ){
         // clear renderer
         SDL_RenderClear( gwindowRenderer );
 
-        test.render();
         test.update();
 
         // fps.render();
