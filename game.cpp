@@ -4,6 +4,7 @@ game::game( SDL_Renderer* ren, unsigned int spe, unsigned int wi, unsigned int h
     renderer = ren;
     ground.setRenderer( ren );
     sky.setRenderer( ren );
+    over.setRenderer( ren );
 
     //load sound
     wing = Mix_LoadWAV( "sound/wing.wav" );
@@ -12,6 +13,7 @@ game::game( SDL_Renderer* ren, unsigned int spe, unsigned int wi, unsigned int h
 
     ground.loadImage(groundp);
     sky.loadImage(skyp);
+    over.loadImage( "img/over.png");
     setBirdToStartPos( ren, hi );
 
     unsigned int border = 70;
@@ -67,6 +69,11 @@ void game::render(){
     ptex.loadText( pch, pointFont, white );
     ptex.render( ( width - ptex.getW() )/2, 50 );
 
+
+    //render "game over" if game is end
+    if ( state[ end ] ){
+        over.render( ( width - over.getW() )/2, ( height - over.getH() )/2 - 100 );
+    }
 }
 SDL_Rect game::getGroundRect(){
     SDL_Rect res = { 0, height - ground.getH(), ground.getW(), ground.getH() };

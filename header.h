@@ -139,6 +139,7 @@ private:
 	bird _bird;
 	myTexture ground;
 	myTexture sky;
+	myTexture over;
 
 	int groundStartX ;
 	unsigned width, height;
