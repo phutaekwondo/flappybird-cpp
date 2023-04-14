@@ -10,7 +10,8 @@ SDL_Renderer* gwindowRenderer = NULL;
 // double distance( double x, double y, double a, double b );
 // void drawElip( int x, int y, int w, int h );
 
-int main( int argc, char* argv[] ){
+int main( int argc, char* argv[] )
+{
     if ( ! init() ){
         std::cout<<"init fail !\n";
         return 0;
